@@ -3,6 +3,6 @@ display_name: Miao-Search 联网搜索
 desc: 接入 searai.rainnya.asia（Miao-Search）的两阶段联网搜索与正文提取服务。支持 LLM 函数工具自动调用，并提供 /search、/fetch 指令。
 short_desc: 让 LLM 拥有联网搜索与网页正文精读能力。
 version: v1.0.0
-author: rainnya
-repo: https://searai.rainnya.asia
+author: jujg12123
+repo: https://github.com/jujg12123/astrbot_plugin_miao_search
 astrbot_version: ">=4.5.7"
