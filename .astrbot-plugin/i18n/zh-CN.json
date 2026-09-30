@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "display_name": "Miao-Search 联网搜索",
+    "short_desc": "让 LLM 拥有联网搜索与网页正文精读能力。",
+    "desc": "接入 searai.rainnya.asia（Miao-Search）的两阶段联网搜索与正文提取服务。支持 LLM 函数工具自动调用，并提供 /search、/fetch 指令。"
+  },
+  "config": {
+    "enable": {
+      "description": "启用插件",
+      "hint": "关闭后 /search、/fetch 指令与 LLM 搜索工具都会停止工作。"
+    },
+    "api_base": {
+      "description": "API 地址",
+      "hint": "Miao-Search 服务地址，通常无需修改。服务官网：https://searai.rainnya.asia"
+    },
+    "api_key": {
+      "description": "API Key（访问令牌）",
+      "hint": "必填。登录 https://searai.rainnya.asia 后打开 https://searai.rainnya.asia/docs 生成访问令牌（形如 sk-miao-xxxxxxxx）。留空则插件不可用。"
+    },
+    "search_mode": {
+      "description": "搜索模式",
+      "labels": [
+        "极速检索（仅标题/网址/摘要）",
+        "一步直达（搜索 + 自动抓取正文）",
+        "仅正文精读（只保留 /fetch 工具）"
+      ],
+      "hint": "极速检索：毫秒级返回标题、网址和简短摘要；一步直达：自动抓取前 N 条网页正文；仅正文精读：只保留「读取指定链接正文」的能力。"
+    },
+    "default_count": {
+      "description": "默认返回条数",
+      "hint": "单次搜索返回的结果条数，范围 1~20。"
+    },
+    "max_fetch_count": {
+      "description": "一步直达模式抓取的正文篇数",
+      "hint": "仅「一步直达」模式生效，范围 1~5。"
+    },
+    "max_content_length": {
+      "description": "单篇正文最大长度（字符）",
+      "hint": "抓取到的 Markdown 正文截断上限，范围 500~20000。"
+    },
+    "timeout": {
+      "description": "请求超时时间（秒）",
+      "hint": "「一步直达」模式需要抓取网页，建议不低于 30 秒。"
+    },
+    "max_retries": {
+      "description": "失败重试次数",
+      "hint": "遇到网络错误或 5xx 错误时的重试次数（0~5）。"
+    },
+    "show_source_links": {
+      "description": "在搜索结果中附带来源链接",
+      "hint": "关闭后只返回标题与摘要。"
+    },
+    "llm_tool": {
+      "description": "LLM 函数工具",
+      "hint": "让大模型在对话中自动调用联网搜索。",
+      "items": {
+        "enable_search_tool": {
+          "description": "注册搜索工具",
+          "hint": "工具名 miao_search。"
+        },
+        "enable_fetch_tool": {
+          "description": "注册正文精读工具",
+          "hint": "工具名 miao_fetch_url。"
+        }
+      }
+    },
+    "command": {
+      "description": "指令",
+      "hint": "不依赖大模型的手动调用方式。",
+      "items": {
+        "enable_command": {
+          "description": "启用 /search 与 /fetch 指令",
+          "hint": "关闭后只能通过 LLM 工具调用。"
+        },
+        "admin_only": {
+          "description": "仅管理员可用",
+          "hint": "开启后只有 AstrBot 管理员能使用这两条指令。"
+        }
+      }
+    }
+  },
+  "pages": {
+    "settings": {
+      "title": "Miao-Search 导航与测试",
+      "description": "打开 Miao-Search 官网与 API 文档、生成访问令牌，并直接测试搜索接口是否可用。",
+      "heading": "Miao-Search 联网搜索",
+      "subtitle": "网址导航、令牌获取与连通性自检",
+      "navTitle": "网址导航",
+      "navHome": "服务官网",
+      "navHomeDesc": "Miao-Search 主页，查看服务介绍与状态。",
+      "navDocs": "API 接入文档",
+      "navDocsDesc": "接口参数、鉴权方式、返回结构与错误码说明。",
+      "navConsole": "控制台 / 令牌管理",
+      "navConsoleDesc": "登录后生成带配额与 QPS 限制的访问令牌（API Key）。",
+      "open": "打开",
+      "testTitle": "连通性自检",
+      "testKeyLabel": "当前 API Key",
+      "testKeyMissing": "尚未配置 API Key，请先到 AstrBot 的「插件配置」中填写。",
+      "testMode": "测试模式",
+      "testQuery": "测试关键词",
+      "testQueryPlaceholder": "例如：AstrBot 是什么",
+      "testRun": "开始测试",
+      "testRunning": "正在请求 Miao-Search…",
+      "testOk": "接口连通正常",
+      "testFail": "接口调用失败",
+      "testResult": "返回内容"
+    }
+  }
+}
