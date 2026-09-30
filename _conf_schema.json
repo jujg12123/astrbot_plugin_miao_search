@@ -1,0 +1,111 @@
+{
+  "enable": {
+    "description": "启用插件",
+    "type": "bool",
+    "hint": "关闭后 /search、/fetch 指令与 LLM 搜索工具都会停止工作。",
+    "default": true
+  },
+  "api_base": {
+    "description": "API 地址",
+    "type": "string",
+    "hint": "Miao-Search 服务地址，通常无需修改。服务官网：https://searai.rainnya.asia",
+    "default": "https://searai.rainnya.asia"
+  },
+  "api_key": {
+    "description": "API Key（访问令牌）",
+    "type": "string",
+    "hint": "必填。请前往 https://searai.rainnya.asia 登录后打开 https://searai.rainnya.asia/docs 生成访问令牌（形如 sk-miao-xxxxxxxx，可设置每日配额与 QPS）。留空则插件不可用；如只想试用，可临时填写系统预置体验 Token：sk-miao-admin-default-test-key",
+    "obvious_hint": true,
+    "default": ""
+  },
+  "search_mode": {
+    "description": "搜索模式",
+    "type": "string",
+    "options": [
+      "quick",
+      "deep",
+      "fetch"
+    ],
+    "labels": [
+      "极速检索（仅标题/网址/摘要）",
+      "一步直达（搜索 + 自动抓取正文）",
+      "仅正文精读（只保留 /fetch 工具）"
+    ],
+    "hint": "极速检索：毫秒级返回标题、网址和简短摘要，约消耗 300 Tokens；一步直达：自动深入抓取前 N 条网页正文，回答更准确但更慢；仅正文精读：不注册搜索工具，只保留「读取指定链接正文」的能力，适合用户直接发链接、或已由 AstrBot 内置网页搜索提供链接的场景。",
+    "default": "deep"
+  },
+  "default_count": {
+    "description": "默认返回条数",
+    "type": "int",
+    "hint": "单次搜索返回的结果条数，范围 1~20。",
+    "default": 5
+  },
+  "max_fetch_count": {
+    "description": "一步直达模式抓取的正文篇数",
+    "type": "int",
+    "hint": "仅「一步直达」模式生效，范围 1~5。数值越大回答越准确，但耗时与 Token 消耗也越高。",
+    "default": 2
+  },
+  "max_content_length": {
+    "description": "单篇正文最大长度（字符）",
+    "type": "int",
+    "hint": "抓取到的 Markdown 正文截断上限，范围 500~20000。过大容易撑爆模型上下文。",
+    "default": 3000
+  },
+  "timeout": {
+    "description": "请求超时时间（秒）",
+    "type": "int",
+    "hint": "「一步直达」模式需要抓取网页，建议不低于 30 秒。",
+    "default": 30
+  },
+  "max_retries": {
+    "description": "失败重试次数",
+    "type": "int",
+    "hint": "遇到网络错误或 5xx 错误时的重试次数（0~5）。限流（429）与鉴权错误不会重试。",
+    "default": 1
+  },
+  "show_source_links": {
+    "description": "在搜索结果中附带来源链接",
+    "type": "bool",
+    "hint": "关闭后只返回标题与摘要，可进一步节省 Token，但模型无法给出参考链接。",
+    "default": true
+  },
+  "llm_tool": {
+    "description": "LLM 函数工具",
+    "type": "object",
+    "hint": "让大模型在对话中自动调用联网搜索。需要模型本身支持函数调用（Function Calling）。",
+    "items": {
+      "enable_search_tool": {
+        "description": "注册搜索工具",
+        "type": "bool",
+        "hint": "工具名 miao_search。用户说「帮我搜一下 xxx」「查一下 xxx」时模型会自动调用。",
+        "default": true
+      },
+      "enable_fetch_tool": {
+        "description": "注册正文精读工具",
+        "type": "bool",
+        "hint": "工具名 miao_fetch_url。用户发来链接并说「总结一下这个链接」时模型会自动调用。",
+        "default": true
+      }
+    }
+  },
+  "command": {
+    "description": "指令",
+    "type": "object",
+    "hint": "不依赖大模型的手动调用方式。",
+    "items": {
+      "enable_command": {
+        "description": "启用 /search 与 /fetch 指令",
+        "type": "bool",
+        "hint": "关闭后只能通过 LLM 工具调用。",
+        "default": true
+      },
+      "admin_only": {
+        "description": "仅管理员可用",
+        "type": "bool",
+        "hint": "开启后只有 AstrBot 管理员能使用这两条指令，避免恶意用户刷光 API 配额。",
+        "default": false
+      }
+    }
+  }
+}
