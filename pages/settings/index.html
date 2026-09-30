@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Miao-Search 导航与测试</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div class="hero-mark">MS</div>
+        <div>
+          <h1 id="heading">Miao-Search 联网搜索</h1>
+          <p id="subtitle" class="muted">网址导航、令牌获取与连通性自检</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2 id="navTitle">网址导航</h2>
+        <ul class="nav-list">
+          <li>
+            <div class="nav-text">
+              <span class="nav-name" id="navHome">服务官网</span>
+              <span class="muted" id="navHomeDesc">Miao-Search 主页，查看服务介绍与状态。</span>
+            </div>
+            <a id="linkHome" class="btn" href="https://searai.rainnya.asia" target="_blank" rel="noreferrer noopener">打开</a>
+          </li>
+          <li>
+            <div class="nav-text">
+              <span class="nav-name" id="navDocs">API 接入文档</span>
+              <span class="muted" id="navDocsDesc">接口参数、鉴权方式、返回结构与错误码说明。</span>
+            </div>
+            <a id="linkDocs" class="btn" href="https://searai.rainnya.asia/docs" target="_blank" rel="noreferrer noopener">打开</a>
+          </li>
+          <li>
+            <div class="nav-text">
+              <span class="nav-name" id="navConsole">控制台 / 令牌管理</span>
+              <span class="muted" id="navConsoleDesc">登录后生成带配额与 QPS 限制的访问令牌（API Key）。</span>
+            </div>
+            <a id="linkConsole" class="btn" href="https://searai.rainnya.asia/docs" target="_blank" rel="noreferrer noopener">打开</a>
+          </li>
+        </ul>
+        <p class="muted tip">
+          提示：API Key 请在 AstrBot 的「插件配置」中填写（插件管理 → 本插件 → 管理配置 → API Key）。
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 id="testTitle">连通性自检</h2>
+        <p class="kv">
+          <span class="muted" id="testKeyLabel">当前 API Key</span>
+          <code id="keyValue">—</code>
+        </p>
+        <p id="keyMissing" class="warn hidden">尚未配置 API Key，请先到 AstrBot 的「插件配置」中填写。</p>
+
+        <div class="form-row">
+          <label class="field">
+            <span class="muted" id="testMode">测试模式</span>
+            <select id="mode">
+              <option value="quick">quick（极速检索）</option>
+              <option value="deep">deep（一步直达）</option>
+              <option value="fetch">fetch（正文精读）</option>
+            </select>
+          </label>
+          <label class="field grow">
+            <span class="muted" id="testQuery">测试关键词</span>
+            <input id="query" type="text" value="AstrBot" placeholder="例如：AstrBot 是什么" />
+          </label>
+          <button id="run" class="btn primary" type="button">开始测试</button>
+        </div>
+
+        <p id="status" class="status"></p>
+        <div id="resultWrap" class="hidden">
+          <h3 id="testResult">返回内容</h3>
+          <pre id="result"></pre>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
